@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amatic+SC&family=Ms+Madi&family=Open+Sans:wght@300&family=Orbitron:wght@900&family=Roboto:ital,wght@0,100;1,100&family=Square+Peg&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        ::selection {
+            background-color: black;
+            color: white;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            background-color: aqua;
+            overflow: hidden;
+        }
+
+        form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        input {
+            display: block;
+            width: 100vw;
+            font-size: 22em;
+            text-align: center;
+            font-family: 'Roboto', sans-serif;
+            margin: 30px auto;
+            border: 0;
+            color: blue;
+            background-color: silver;
+            height: 80vh;
+            font-style: italic;
+            overflow: hidden;
+        }
+
+        input:hover{
+            transform: skewY(4deg);
+            transform: rotate(18deg);
+            transition: 5s;
+            overflow: hidden;
+        }
+        
+        @media (max-width:768px) {
+    
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100vw;
+                height: 100vh;
+                background-color: aqua;
+                overflow: hidden;
+            }
+    
+            input {
+                display: block;
+                width: 100vw;
+                font-size: 4em;
+                text-align: center;
+                font-family: 'Roboto', sans-serif;
+                margin: 30px auto;
+                border: 0;
+                color: blue;
+                background-color: silver;
+                height: 40vh;
+                font-style: italic;
+                overflow: hidden;
+            }
+    
+            input:hover{
+                transform: skewY(4deg);
+                transform: rotate(18deg);
+                transition: 5s;
+                overflow: hidden;
+            }
+            
+        }
+    </style>
+</head>
+
+<body>
+    <form action="" name="forme">
+        <input type="text" name="clock">
+    </form>
+
+    <script>
+        function runTime() {
+            // set local variables
+            var tClock = document.forme.clock;
+            var theTime = new Date();
+            var sc = theTime.getSeconds();
+            var mn = theTime.getMinutes();
+            var hr = theTime.getHours();
+            var amPm;
+
+            // add zero to a 1 number seconds like 4 will be 04
+            if (sc < 10) {
+                sc = '0' + sc
+            }
+
+            // add zero to a 1 number miniutes like 4 will be 04
+            if (mn < 10) {
+                mn = '0' + mn
+            }
+
+            // use the previously setted variable to AM or PM
+            if (hr >= 12 && hr < 24) {
+                amPm = ' pm'
+            } else {
+                amPm = ' am'
+            }
+
+            //  when it's 00:00:00 I want to see 12:00:00 AM
+            if (hr == 0) {
+                hr += 12
+            }
+
+            // when it's 13 till 23 Iwant to see *1* till *11*PM
+            for (var i = 13; i < 25; i++) {
+                if (hr === i) {
+                    hr -= 12;
+                }
+            }
+
+            // create the finished variable of the time who it seems on the document
+            var clockFace = hr + ' : ' + mn + ' : ' + sc + amPm
+
+            // connect the finished variable to the document
+            tClock.value = clockFace
+
+
+            var randomColor = Math.floor(Math.random() * 16777215).toString(16);
+
+            tClock.style.color = `#${randomColor}`
+
+
+            // run the function every seconds for a running clock - recursion
+            setTimeout(runTime, 1000)
+        }
+
+        // run it for the first time you open/refresh the page and then the recursion starts to kick in:)
+        runTime()
+    </script>
+</body>
+
+</html>
